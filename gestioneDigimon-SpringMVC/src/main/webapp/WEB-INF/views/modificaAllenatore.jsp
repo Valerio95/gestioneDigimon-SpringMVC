@@ -13,6 +13,12 @@
 <h2>modifica il nome dell'allenatore</h2>
 		<form:form action="creaAllenatore" method="post" modelAttribute="allenatore">
 			<table>
+			<tr>
+					<td>ID: </td>
+					<td>${allenatore.id}
+						<form:hidden path="id"/>
+					</td>
+				</tr>		
 				<tr>
 					<td>Nome: </td>
 					<td><form:input path="nome" /></td>

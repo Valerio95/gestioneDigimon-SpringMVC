@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<br> <br>Gestisci la squadra dell' allenatore }<br> <br>
+<br> <br>Gestisci la squadra dell' allenatore ${allenatore.nome} <br> <br>
 <table >
 		<tr>
 			<th>ID</th>
@@ -21,7 +21,7 @@
 			<th>Hp</th>
 			<th>Evoluzione</th>
 		</tr>
-		<c:forEach items="${squadra}" var="digimon">
+		<c:forEach items="${allenatore.listaDigimon}" var="digimon">
 		<tr>
 			<td>${digimon.id}</td>
 			<td>${digimon.nome}</td>
@@ -41,6 +41,22 @@
 	</table>
 	
 	<br> <br>Scegli i digimon che vuoi aggiungere alla squadra<br> <br>
+	
+	
+		<br> <br>Scegli un ordinamento<br> <br>
+	<form action="ordinaLista" method="post">
+	<select name="ordinamento" >
+  <option value="OrdAtk">ordina per atk</option>
+  <option value="OrdDef">ordina per def</option>
+  <option value="OrdRes">ordina per res</option>
+  <option value="OrdHp">ordina per hp</option>
+  <option value="OrdEvo">ordina per evoluzione</option>
+
+</select>
+<input type="hidden" name="idAllenatore" value="${allenatore.id}">
+
+<input type="submit" value="Ordina">
+	</form>
 	<table >
 		<tr>
 			<th>ID</th>
@@ -51,9 +67,13 @@
 			<th>Hp</th>
 			<th>Evoluzione</th>
 		</tr>
+		
 		<c:forEach items="${listaDigimon}" var="digimon">
+		<form:form  action="aggiungiDigimon" method="post" >
 		<tr>
-			<td>${digimon.id}</td>
+			<td>${digimon.id}
+			
+			</td>
 			<td>${digimon.nome}</td>
 			<td>${digimon.atk}</td>
 			<td>${digimon.def}</td>
@@ -62,12 +82,17 @@
 			<td>${digimon.evoluzione}</td>
 			
 			<td>
+			
+			    <input type="hidden" name="digimon" value="${digimon.id}">
+				<input type="hidden" name="idAllenatore" value="${allenatore.id}">
+				<input type="submit" name="azione" value="Aggiungi alla Squadra" />
 				
-			    <a href="aggiungiDigimon?id=${digimon.id}">Aggiungi alla Squadra</a>
 				
 			</td>
 		</tr>
+		</form:form>
 		</c:forEach>
+		
 	</table>
 </body>
 </html>

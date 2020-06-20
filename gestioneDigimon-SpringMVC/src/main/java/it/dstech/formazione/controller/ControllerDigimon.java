@@ -67,4 +67,23 @@ public class ControllerDigimon {
 		digimonService.delete(id);
 		return "redirect:/gestioneDigimon";		
 	}
+	
+	@RequestMapping("/ordinaLista1")
+	public String ordinaLista(@RequestParam("ordinamento") String ordinamento, Map<String, Object> model ) {
+		List<Digimon> listaDigimon = digimonService.listAll();
+		Digimon digimon = new Digimon();
+		if ("OrdAtk".equalsIgnoreCase(ordinamento)) {
+			listaDigimon=digimonService.ordinamentoPerAtk(listaDigimon);
+		}else if ("OrdDef".equalsIgnoreCase(ordinamento)) {
+			listaDigimon=digimonService.ordinamentoPerDef(listaDigimon);
+		}else if ("OrdRes".equalsIgnoreCase(ordinamento)) {
+			listaDigimon=digimonService.ordinamentoPerRes(listaDigimon);
+		}else if ("OrdHp".equalsIgnoreCase(ordinamento)) {
+			listaDigimon=digimonService.ordinamentoPerHp(listaDigimon);
+		}
+		model.put("listaDigimon", listaDigimon);
+		model.put("digimon", digimon);
+
+		return "azioniAdmin";		
+	}
 }

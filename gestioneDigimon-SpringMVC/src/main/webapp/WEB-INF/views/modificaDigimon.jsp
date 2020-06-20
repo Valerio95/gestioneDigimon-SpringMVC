@@ -12,6 +12,12 @@
                     <h2>Inserisci i campi da modificare</h2>
 		<form:form action="creaDigimon" method="post" modelAttribute="digimon">
 			<table>
+			<tr>
+					<td>ID: </td>
+					<td>${digimon.id}
+						<form:hidden path="id"/>
+					</td>
+				</tr>		
 				<tr>
 					<td>Nome: </td>
 					<td><form:input path="nome" /></td>

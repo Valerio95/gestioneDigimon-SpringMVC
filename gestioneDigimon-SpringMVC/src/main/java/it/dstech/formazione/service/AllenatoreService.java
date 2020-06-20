@@ -33,8 +33,10 @@ public class AllenatoreService {
 		repo.deleteById(id);
 	}
 	
-	public void aggiungiDigimonAdAllenatore (Digimon digimon,Allenatore allenatore) {
+	public void aggiungiDigimonAdAllenatore (Digimon digimon,long idAllenatore) {
+		Allenatore allenatore = repo.findById(idAllenatore).get();
 		
+
 		allenatore.getListaDigimon().add(digimon);
 	}
 	

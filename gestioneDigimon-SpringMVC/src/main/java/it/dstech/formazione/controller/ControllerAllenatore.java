@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -60,13 +61,40 @@ public class ControllerAllenatore {
 	
 	@RequestMapping("/scegliAllenatore")
 	public String scegliAllenatore(@RequestParam long id,Map<String, Object> model ) {
+		System.out.println(id);
 		Allenatore allenatore = allenatoreService.get(id);
-		List<Digimon> squadra = allenatore.getListaDigimon();
-		System.out.println("||||||||||||||\\\\\\\\\\\\\\"+allenatore);
+		
 		List<Digimon> listaDigimon = digimonService.listAll();
-		model.put("squadra", squadra);
+		model.put("allenatore", allenatore);
 		model.put("listaDigimon", listaDigimon);
 		return "gestioneSquadra";		
 	}
 	
+	@RequestMapping("/aggiungiDigimon")
+	public String addDigimonAllenatore( @RequestParam("digimon")long idDigimon, @RequestParam("idAllenatore") long idAlle, Model model) {	
+		Digimon digimon = digimonService.get(idDigimon);
+		allenatoreService.aggiungiDigimonAdAllenatore(digimon, idAlle);
+		model.addAttribute("id", idAlle);
+		return "redirect:/scegliAllenatore";		
+	}
+	
+	@RequestMapping("/ordinaLista")
+	public String ordinaLista(@RequestParam("ordinamento") String ordinamento,@RequestParam("idAllenatore") long idAlle, Map<String, Object> model ) {
+		List<Digimon> listaDigimon = digimonService.listAll();
+		Digimon digimon = new Digimon();
+		if ("OrdAtk".equalsIgnoreCase(ordinamento)) {
+			listaDigimon=digimonService.ordinamentoPerAtk(listaDigimon);
+		}else if ("OrdDef".equalsIgnoreCase(ordinamento)) {
+			listaDigimon=digimonService.ordinamentoPerDef(listaDigimon);
+		}else if ("OrdRes".equalsIgnoreCase(ordinamento)) {
+			listaDigimon=digimonService.ordinamentoPerRes(listaDigimon);
+		}else if ("OrdHp".equalsIgnoreCase(ordinamento)) {
+			listaDigimon=digimonService.ordinamentoPerHp(listaDigimon);
+		}
+		model.put("id", idAlle);
+		model.put("listaDigimon", listaDigimon);
+		model.put("digimon", digimon);
+
+		return "redirect:/scegliAllenatore";		
+	}
 }

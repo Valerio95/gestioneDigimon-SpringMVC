@@ -51,7 +51,19 @@
 				</tr>						
 			</table>
 		</form:form>
-	
+		
+		 <br>Scegli un ordinamento<br>
+	<form action="ordinaLista1" method="post">
+	<select name="ordinamento" >
+  <option value="OrdAtk">ordina per atk</option>
+  <option value="OrdDef">ordina per def</option>
+  <option value="OrdRes">ordina per res</option>
+  <option value="OrdHp">ordina per hp</option>
+  <option value="OrdEvo">ordina per evoluzione</option>
+
+</select>
+<input type="submit" value="Ordina">
+	</form>
 	<table >
 		<tr>
 			<th>ID</th>

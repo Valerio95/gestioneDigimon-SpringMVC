@@ -1,24 +1,25 @@
 package it.dstech.formazione.modelli;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+
 @Entity
-public class Digimon {
+public class Digimon implements   Comparable<Digimon> {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	
-	@OneToMany
-    private List<Allenatore> listaAllenatori= new ArrayList<Allenatore>();
+	@OneToMany(fetch = FetchType.EAGER)
+    private List<Allenatore> listaAllenatori;
 	private String nome;
 	private int atk;
 	private int def;
@@ -91,8 +92,21 @@ public class Digimon {
 	public void setEvoluzione(Evoluzione evoluzione) {
 		this.evoluzione = evoluzione;
 	}
+
+	@Override
+	public String toString() {
+		return "Digimon [id=" + id + ", listaAllenatori=" + listaAllenatori + ", nome=" + nome + ", atk=" + atk
+				+ ", def=" + def + ", res=" + res + ", hp=" + hp + ", evoluzione=" + evoluzione + "]";
+	}
 	
-	
+	@Override
+	public int compareTo(Digimon o) {
+		if (this.getAtk() > o.getAtk())
+			return -1;
+		if (this.getAtk() < o.getAtk())
+			return 1;
+		return 0;
+	}
 	
 
 }

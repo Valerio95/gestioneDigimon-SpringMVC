@@ -1,9 +1,9 @@
 package it.dstech.formazione.modelli;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,8 +19,8 @@ public class Allenatore {
 	private Long id;
 	private String nome;
 	
-	@OneToMany
-	private List<Digimon> listaDigimon = new ArrayList<Digimon>();
+	@OneToMany(fetch = FetchType.EAGER)
+	private List<Digimon> listaDigimon ;
 	
 	public Long getId() {
 		return id;
@@ -34,6 +34,7 @@ public class Allenatore {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+	
 	public List<Digimon> getListaDigimon() {
 		return listaDigimon;
 	}
